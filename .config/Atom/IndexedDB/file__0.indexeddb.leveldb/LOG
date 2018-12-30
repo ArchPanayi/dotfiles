@@ -1,6 +1,0 @@
-2018/12/15-19:55:03.982 860 Reusing MANIFEST /root/.config/Atom/IndexedDB/file__0.indexeddb.leveldb/MANIFEST-000001
-2018/12/15-19:55:03.982 860 Recovering log #3
-2018/12/15-19:55:03.982 860 Reusing old log /root/.config/Atom/IndexedDB/file__0.indexeddb.leveldb/000003.log 
-2018/12/15-19:59:14.505 1172 Level-0 table #5: started
-2018/12/15-19:59:14.521 1172 Level-0 table #5: 905564 bytes OK
-2018/12/15-19:59:14.524 1172 Delete type=0 #3
