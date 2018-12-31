@@ -27,7 +27,7 @@ nnoremap <F1> :w<CR>
 
 "colon number
 set textwidth=80
-set colorcolumn=+1
+"set colorcolumn=+1
 
 "highlight search matches
 set hlsearch

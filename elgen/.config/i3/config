@@ -175,17 +175,7 @@ set $text-color           #f3f4f5
 set $inactive-text-color  #676E7D
 set $urgent-bg-color      #E53935
 
-bar {
-        status_command i3blocks -c ~/.config/i3/i3blocks.conf
-        colors {
-          #colorclass         #border             #background         #text
-          background          $bg-color
-          separator           #757575
-          focused_workspace   $bg-color           $bg-color           $text-color
-          inactive_workspace  $inactive-bg-color  $inactive-bg-color  $inactive-text-color
-          urgent_workspace    $urgent-bg-color    $urgent-bg-color    $text-color
-        }
-}
+exec polybar main
 
 #startup config
 exec xrandr --output VGA-1 --mode 1920x1080
@@ -202,6 +192,7 @@ for_window [class="^.*"] border pixel 0
 
 #Add gaps
 gaps inner 8
+smart_gaps on
 
 #Transparency
 exec compton -b

@@ -1,0 +1,416 @@
+#################################################################################
+#                                                                               #
+#          ██▓███   ▒█████   ██▓   ▓██   ██▓ ▄▄▄▄    ▄▄▄       ██▀███           #
+#         ▓██░  ██▒▒██▒  ██▒▓██▒    ▒██  ██▒▓█████▄ ▒████▄    ▓██ ▒ ██▒         #
+#         ▓██░ ██▓▒▒██░  ██▒▒██░     ▒██ ██░▒██▒ ▄██▒██  ▀█▄  ▓██ ░▄█ ▒         #
+#         ▒██▄█▓▒ ▒▒██   ██░▒██░     ░ ▐██▓░▒██░█▀  ░██▄▄▄▄██ ▒██▀▀█▄           #
+#         ▒██▒ ░  ░░ ████▓▒░░██████▒ ░ ██▒▓░░▓█  ▀█▓ ▓█   ▓██▒░██▓ ▒██▒         #
+#         ▒▓▒░ ░  ░░ ▒░▒░▒░ ░ ▒░▓  ░  ██▒▒▒ ░▒▓███▀▒ ▒▒   ▓▒█░░ ▒▓ ░▒▓░         #
+#         ░▒ ░       ░ ▒ ▒░ ░ ░ ▒  ░▓██ ░▒░ ▒░▒   ░   ▒   ▒▒ ░  ░▒ ░ ▒░         #
+#         ░░       ░ ░ ░ ▒    ░ ░   ▒ ▒ ░░   ░    ░   ░   ▒     ░░   ░          #
+#                      ░ ░      ░  ░░ ░      ░            ░  ░   ░              #
+#                                   ░ ░           ░                             #
+#                                                                               #
+# CONFIGURED BY: EUKALYPTENHD                                                   #
+#################################################################################
+
+[colors]
+background = #A0000000
+foreground = #444444
+primary    = #ffb52a
+secondary  = #e60053
+alert      = #bd2c40
+
+#################################################################################
+
+[bar/main]
+monitor             = VGA-1
+width               = 100%
+height              = 30
+override-redirect   = false
+radius              = 0
+dim-value           = 0.9
+
+background          = ${colors.background}
+foreground          = ${colors.foreground}
+
+font-0              = terminus:pixelsize=12;1
+font-1              = FontAwesome:pixelsize=12;3
+
+
+separator           = "  "
+module-margin       = 1
+modules-right       = pkg-updates filesystem memory cpu network battery date
+
+[bar/fullscreen]
+monitor             = VGA-1
+width               = 100%
+height              = 100%
+override-redirect   = true
+dim-value           = 0.5
+click-left          = pkill -f "polybar fullscreen"
+
+background          = #000000
+foreground          = ${colors.foreground}
+font-0              = terminus:pixelsize=10
+
+separator           = ""
+module-margin       = 1
+modules-center      = fmemory fcpu fwlan eth fbattery temperature rpm date
+
+#################################################################################
+
+[module/network]
+type = internal/network
+interface = enp0s3
+
+; Seconds to sleep between updates
+; Default: 1
+interval = 3.0
+
+; Test connectivity every Nth update
+; A value of 0 disables the feature
+; NOTE: Experimental (needs more testing)
+; Default: 0
+;ping-interval = 3
+
+; @deprecated: Define min width using token specifiers (%downspeed:min% and %upspeed:min%)
+; Minimum output width of upload/download rate
+; Default: 3
+%downspeed:min:max% = 5
+
+; Accumulate values from all interfaces
+; when querying for up/downspeed rate
+; Default: false
+accumulate-stats = true
+
+; Consider an `UNKNOWN` interface state as up.
+; Some devices have an unknown state, even when they're running
+; Default: false
+unknown-as-up = true
+
+; Available tags:
+;   <label-connected> (default)
+;   <ramp-signal>
+format-connected = <label-connected>
+
+; Available tags:
+;   <label-disconnected> (default)
+format-disconnected = <label-disconnected>
+
+; Available tags:
+;   <label-connected> (default)
+;   <label-packetloss>
+;   <animation-packetloss>
+format-packetloss = <animation-packetloss> <label-connected>
+
+; Available tokens:
+;   %ifname%    [wireless+wired]
+;   %local_ip%  [wireless+wired]
+;   %local_ip6% [wireless+wired]
+;   %essid%     [wireless]
+;   %signal%    [wireless]
+;   %upspeed%   [wireless+wired]
+;   %downspeed% [wireless+wired]
+;   %linkspeed% [wired]
+; Default: %ifname% %local_ip%
+label-connected =  %downspeed:9%
+label-connected-foreground = #eefafafa
+
+; Available tokens:
+;   %ifname%    [wireless+wired]
+; Default: (none)
+label-disconnected = not connected
+label-disconnected-foreground = #66ffffff
+
+; Available tokens:
+;   %ifname%    [wireless+wired]
+;   %local_ip%  [wireless+wired]
+;   %local_ip6% [wireless+wired]
+;   %essid%     [wireless]
+;   %signal%    [wireless]
+;   %linkspeed% [wired]
+; Default: (none)
+;label-packetloss = %essid%
+;label-packetloss-foreground = #eefafafa
+
+; Only applies if <ramp-signal> is used
+ramp-signal-0 = 😱
+ramp-signal-1 = 😠
+ramp-signal-2 = 😒
+ramp-signal-3 = 😊
+ramp-signal-4 = 😃
+ramp-signal-5 = 😈
+
+; Only applies if <animation-packetloss> is used
+animation-packetloss-0 = ⚠
+animation-packetloss-0-foreground = #ffa64c
+animation-packetloss-1 = 📶
+animation-packetloss-1-foreground = #000000
+; Framerate in milliseconds
+animation-packetloss-framerate = 500
+
+#################################################################################
+
+[memory]
+type                          = internal/memory
+format-prefix                 = ""
+format-foreground             = #aaff77
+label                         = %percentage_used:3%%
+
+[module/memory]
+type                          = ${memory.type}
+format-prefix                 = ${memory.format-prefix}
+format-foreground             = ${memory.format-foreground}
+
+[module/fmemory]
+type                          = ${memory.type}
+format                        = <label> <bar-used>
+format-prefix                 = ${memory.format-prefix}
+format-foreground             = ${memory.format-foreground}
+
+bar-used-width                = 10
+bar-used-foreground-0         = #aaff77
+bar-used-foreground-1         = #aaff77
+bar-used-foreground-2         = #fba922
+bar-used-foreground-3         = #ff5555
+bar-used-empty-foreground     = #aaff77
+
+bar-used-indicator            = ""
+bar-used-fill                 = ""
+bar-used-empty                = "-"
+
+#################################################################################
+
+[cpu]
+type                  = internal/cpu
+format-prefix         = " "
+format-foreground     = #f1c40f
+label                 = %percentage:3%%
+
+[module/cpu]
+type                  = ${cpu.type}
+
+format-prefix         = ${cpu.format-prefix}
+format-foreground     = ${cpu.format-foreground}
+label                 = ${cpu.label}
+
+[module/fcpu]
+type                  = ${cpu.type}
+format                = <label> <ramp-coreload>
+format-prefix         = ${cpu.format-prefix}
+format-foreground     = ${cpu.format-foreground}
+label                 = ${cpu.label}
+
+ramp-coreload-spacing = 1
+ramp-coreload-0       = ▁
+ramp-coreload-1       = ▂
+ramp-coreload-2       = ▃
+ramp-coreload-3       = ▄
+ramp-coreload-4       = ▅
+ramp-coreload-5       = ▆
+ramp-coreload-6       = ▇
+ramp-coreload-7       = █
+
+#################################################################################
+
+[battery]
+type                          = internal/battery
+battery                       = BAT0
+adapter                       = AC
+full-at                       = 100
+format-foreground             = #e74c3c
+
+[module/battery]
+type                          = ${battery.type}
+battery                       = ${battery.battery}
+adapter                       = ${battery.adapter}
+full-at                       = ${battery.full-at}
+
+format-charging               = <animation-charging> <label-charging>
+format-charging-foreground    = ${battery.format-foreground}
+format-discharging            = <animation-discharging> <label-discharging>
+format-discharging-foreground = ${battery.format-foreground}
+format-full-prefix            = "FULLY CHARGED!"
+
+animation-charging-0          = "[] "
+animation-charging-1          = "[] "
+animation-charging-2          = "[] "
+animation-charging-3          = "[] "
+animation-charging-4          = "[] "
+
+animation-discharging-0       = ""
+animation-discharging-1       = ""
+animation-discharging-2       = ""
+animation-discharging-3       = ""
+animation-discharging-4       = ""
+
+
+[module/fbattery]
+type                          = ${battery.type}
+battery                       = ${battery.battery}
+adapter                       = ${battery.adapter}
+full-at                       = ${battery.full-at}
+
+format-charging               = <animation-charging> <label-charging>
+format-charging-foreground    = ${battery.format-foreground}
+format-discharging            = <animation-discharging> <label-discharging>
+format-discharging-foreground = ${battery.format-foreground}
+format-full-prefix            = "FULLY CHARGED!"
+label-discharging             = %percentage%% [%consumption%W] [%time%]
+
+ramp-capacity-0               = ""
+ramp-capacity-1               = ""
+ramp-capacity-2               = ""
+ramp-capacity-3               = ""
+ramp-capacity-4               = ""
+
+animation-charging-0          = "[] "
+animation-charging-1          = "[] "
+animation-charging-2          = "[] "
+animation-charging-3          = "[] "
+animation-charging-4          = "[] "
+
+animation-discharging-0       = ""
+animation-discharging-1       = ""
+animation-discharging-2       = ""
+animation-discharging-3       = ""
+animation-discharging-4       = ""
+
+#################################################################################
+
+[date]
+type               = internal/date
+date               = "%d/%m/%Y"
+time               = "%H:%M:%S"
+
+[module/date]
+type               = ${date.type}
+date               = ${date.date}
+time               = ${date.time}
+
+format-prefix = " "
+format-foreground = #B53471
+label = %date% [%time%]
+
+#################################################################################
+
+[module/i3]
+type = internal/i3
+
+; Only show workspaces defined on the same output as the bar
+;
+; Useful if you want to show monitor specific workspaces
+; on different bars
+;
+; Default: false
+pin-workspaces = true
+
+; This will split the workspace name on ':'
+; Default: false
+strip-wsnumbers = true
+
+; Sort the workspaces by index instead of the default
+; sorting that groups the workspaces by output
+; Default: false
+index-sort = true
+
+; Create click handler used to focus workspace
+; Default: true
+enable-click = false
+
+; Create scroll handlers used to cycle workspaces
+; Default: true
+enable-scroll = false
+
+; Wrap around when reaching the first/last workspace
+; Default: true
+wrapping-scroll = false
+
+; Set the scroll cycle direction
+; Default: true
+reverse-scroll = false
+
+; Use fuzzy (partial) matching on labels when assigning
+; icons to workspaces
+; Example: code;♚ will apply the icon to all workspaces
+; containing 'code' in the label
+; Default: false
+fuzzy-match = true
+
+label-focused-foreground = #ffffff
+
+#################################################################################
+
+[module/filesystem]
+type = internal/fs
+
+; Mountpoints to display
+mount-0 = /home
+
+; Seconds to sleep between updates
+interval = 10
+
+; Display fixed precision values
+; Default: false
+fixed-values = true
+
+; Spacing between entries
+; Default: 2
+spacing = 4
+; Available tags:
+;   <label-mounted> (default)
+;   <bar-free>
+;   <bar-used>
+;   <ramp-capacity>
+format-mounted = <label-mounted>
+
+; Available tags:
+;   <label-unmounted> (default)
+format-unmounted = <label-unmounted>
+
+; Available tokens:
+;   %mountpoint%
+;   %type%
+;   %fsname%
+;   %percentage_free%
+;   %percentage_used%
+;   %total%
+;   %free%
+;   %used%
+; Default: %mountpoint% %percentage_free%%
+label-mounted-foreground = #1245A8
+label-mounted =  %free%
+
+; Available tokens:
+;   %mountpoint%
+; Default: %mountpoint% is not mounted
+label-unmounted = %mountpoint%: not mounted
+label-unmounted-foreground = #55
+
+#################################################################################
+
+[module/pkg-updates]
+type = custom/script
+
+label-foreground = #993d0f
+
+; Available tokens:
+;   %counter%
+; Command to be executed (using "/usr/bin/env sh -c [command]")
+exec = ~/.config/polybar/script/pacman.sh
+
+; Conditional command that, if defined, needs to exit successfully
+; before the main exec command is invoked.
+; Default: ""
+; exec-if = pgrep -x myservice
+
+; Will the script output continous content?
+; Default: false
+tail = true
+
+; Seconds to sleep between updates
+; Default: 2 (0 if `tail = true`)
+interval = 90
+
+
