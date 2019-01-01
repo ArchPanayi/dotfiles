@@ -23,7 +23,7 @@ nnoremap <F4> :tabn<CR>
 
 "other key mapping
 nnoremap <F5> :nohlsearch<CR>
-nnoremap <F1> :w<CR>
+nnoremap <F1> :NERDTree<CR>
 
 "colon number
 set textwidth=80
@@ -38,3 +38,5 @@ set title
 
 "To juste put file name and not whole path
 set autochdir
+execute pathogen#infect()
+call pathogen#helptags()

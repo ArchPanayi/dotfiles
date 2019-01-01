@@ -1,1 +1,1 @@
-echo " " $(pacman -Qu | wc -l)
+echo " " $(pacman -Qu | wc -l) "/" $(pacman -Q | wc -l)

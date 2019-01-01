@@ -21,3 +21,5 @@ export PS1="\e[1;33m[\w]# \e[m "
 
 #cmake
 alias cmake='cmake .'
+
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/home/panayi/.vimpkg/bin"
